@@ -9,11 +9,11 @@ Celery backend doesn't support tracking canvas workflows.
 - A step fails in a workflow: step and all remaining tasks are marked as failed. There is no clear link between all items in the workflow.
 - System goes down (while late acks are false): Celery backend will record those as `STARTED` or `PENDING`. Any children will be in a limbo - there is no clear link between all items in the workflow.
 
-Issues:
-- You dont know which tasks below to which workflow
+### Impact
+- You dont know which tasks belong to which workflow
 - You cant simply restart tasks
 
-This becomes especially problematic when you run hundreds of thousands tasks per day. Even a short lasting issue can result in a lot of tasks.
+This becomes especially problematic when you run hundreds of thousands tasks. Even a short lasting issue can result in a lot of orphaned tasks.
 
 # Plan
 ## Capture execution plan
