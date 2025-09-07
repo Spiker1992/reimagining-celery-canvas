@@ -6,8 +6,8 @@ Celery canvas has some issues when it comes to being reliable.
 Celery backend doesn't support tracking canvas workflows.
 
 ## Example
-A step fails in a workflow: step and all remaining tasks are marked as failed. There is no clear link between all items in the workflow.
-System goes down (while late acks are false): Celery backend will record those as `STARTED` or `PENDING`. Any children will be in a limbo - there is no clear link between all items in the workflow.
+- A step fails in a workflow: step and all remaining tasks are marked as failed. There is no clear link between all items in the workflow.
+- System goes down (while late acks are false): Celery backend will record those as `STARTED` or `PENDING`. Any children will be in a limbo - there is no clear link between all items in the workflow.
 
 Issues:
 - You dont know which tasks below to which workflow
