@@ -1,3 +1,5 @@
 celery
-SQLAlchemy
 pytest
+django
+djangorestframework
+pytest-django
