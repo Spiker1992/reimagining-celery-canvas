@@ -5,14 +5,14 @@ from django.db import models
 class WorkflowLog(models.Model):
     workflow_id = models.CharField(max_length=255, db_index=True)
     timestamp = models.DateTimeField(auto_now_add=True)
-    payload = models.JSONField()
+    name = models.TextField()
 
     def __str__(self):
         return f"WorkflowLog({self.workflow_id})"
 
 class WorkflowTask(models.Model):
     workflow_id = models.CharField(max_length=255, db_index=True)
-    task_name = models.CharField(max_length=255)
+    task_name = models.TextField()
     args = models.JSONField()
     kwargs = models.JSONField()
     sequence = models.IntegerField()

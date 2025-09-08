@@ -31,19 +31,21 @@ def save_workflow_tasks(workflow_id: uuid4, tasks: List[Any]) -> None:
             )
 
 @transaction.atomic
-def create_workflow(*tasks: Any) -> uuid4:
+def create_workflow(workflow_name: str, *tasks: Any) -> uuid4:
     """
-    Stores the list of tasks to be executed in the database.
+    Stores the workflow name and list of tasks to be executed in the database.
     Each task is represented by its name and arguments.
     """
     if not tasks:
         raise ValueError("At least one task must be provided to create a workflow.")
 
     workflow_id = uuid4()
-    serialized_tasks = [serialize_task(task) for task in tasks]
 
-    save_workflow_log(workflow_id, serialized_tasks)
+    # Save workflow name in WorkflowLog
+    WorkflowLog.objects.create(workflow_id=workflow_id, name=workflow_name)
+
     save_workflow_tasks(workflow_id, tasks)
 
-    logger.info(f"Workflow {workflow_id} created and tasks stored in DB.")
+
+    logger.info(f"Workflow {workflow_id} with name '{workflow_name}' created and tasks stored in DB.")
     return workflow_id
