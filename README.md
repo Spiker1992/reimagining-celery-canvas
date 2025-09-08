@@ -35,6 +35,10 @@ by calling the respective task with its args and kwargs
 for each task we track its status (pending, running, completed, failed)
 and the result or error message if applicable
 
+- tasks would be triggered right away
+- using signals we should be able to manage tasks progress
+- once we get a signal of success, task will be moved to the next one
+
 ## Completion
 
 once all tasks are completed, we mark the workflow as completed
