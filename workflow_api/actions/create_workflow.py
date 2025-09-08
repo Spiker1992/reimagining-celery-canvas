@@ -46,6 +46,5 @@ def create_workflow(workflow_name: str, *tasks: Any) -> uuid4:
 
     save_workflow_tasks(workflow_id, tasks)
 
-
     logger.info(f"Workflow {workflow_id} with name '{workflow_name}' created and tasks stored in DB.")
     return workflow_id

@@ -34,9 +34,9 @@ def test_create_workflow():
         workflow_name, task_a.s("data1"), task_b.s("data2"), task_c.s("data3")
     )
 
-
-    log = WorkflowLog.objects.filter(workflow_id=workflow_id).get()
+    log = WorkflowLog.objects.get(workflow_id=workflow_id)
     assert log.name == workflow_name
+    assert log.status == "pending"
 
     tasks = WorkflowTask.objects.filter(workflow_id=workflow_id).order_by("sequence")
 
