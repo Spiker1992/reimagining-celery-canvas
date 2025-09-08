@@ -27,12 +27,17 @@ def test_create_workflow_rollback_on_failure(mocker):
     # Ensure no WorkflowLog is created
     assert WorkflowLog.objects.count() == 0
 
+
 @pytest.mark.django_db
-def test_create_workflow():
+def test_create_workflow(mocker):
+    execute_first_task = mocker.patch("workflow_api.tasks.task_a.delay_on_commit")
+
     workflow_name = "Execution Plan Workflow"
     workflow_id = create_workflow(
         workflow_name, task_a.s("data1"), task_b.s("data2"), task_c.s("data3")
     )
+
+    execute_first_task.assert_called_once_with(workflow_id, "data1")
 
     log = WorkflowLog.objects.get(workflow_id=workflow_id)
     assert log.name == workflow_name
@@ -53,3 +58,5 @@ def test_create_workflow():
     assert tasks[2].task_name == "workflow_api.tasks.task_c"
     assert tasks[2].args == ["data3"]
     assert tasks[2].kwargs == {}
+
+
